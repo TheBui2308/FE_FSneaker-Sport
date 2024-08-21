@@ -1,6 +1,6 @@
 export type IPaymentMethod = 'cod' | 'vnpay'
 
-export type IOrderStatus = 'pending' | 'waiting' | 'delivering' | 'done' | 'cancel'
+export type IOrderStatus = 'pending' | 'waiting' | 'delivering' | 'done' | 'cancel' | 'fail'
 
 export type IPaymentStatus = 'unpaid' | 'paid'
 

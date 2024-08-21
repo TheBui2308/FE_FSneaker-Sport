@@ -15,8 +15,9 @@ export const ORDER_STATUS_NAMES: Record<IOrderStatus, string> = {
     pending: 'Chờ xác nhận',
     waiting: 'Đã xác nhận',
     delivering: 'Đang giao hàng',
-    done: 'Hoàn thành',
-    cancel: 'Huỷ bỏ'
+    done: 'Giao hàng thành công',
+    cancel: 'Huỷ bỏ',
+    fail: 'Giao hàng thất bại'
 }
 
 export const ORDER_STATUS_COLORS: Record<IOrderStatus, string> = {
@@ -24,7 +25,8 @@ export const ORDER_STATUS_COLORS: Record<IOrderStatus, string> = {
     waiting: 'processing',
     delivering: 'cyan',
     done: 'success',
-    cancel: 'error'
+    cancel: 'error',
+    fail: 'volcano'
 }
 
 export const ORDER_PAYMENT_NAMES: Record<IPaymentMethod, string> = {
