@@ -31,7 +31,7 @@ const HighestRevenueProducts = ({ products }) => {
                             <Link to={`/admin/products/detail/${product.productId}`} className="flex items-center w-full">
                                 <img className="w-12 h-12 object-cover rounded mr-4" src={product.image} alt={product.name} />
                                 <div className="flex-grow">
-                                    <h3 className="text-sm w-4/5 font-semibold text-gray-800">{product.productName}</h3>
+                                    <h3 className="text-sm w-4/5 font-semibold text-gray-800 line-clamp-2">{product.productName}</h3>
                                     <p className="text-sm text-gray-600">Size: {product.sizeName}</p>
                                 </div>
                                 <div className="text-sm font-bold text-right text-green-700">
