@@ -17,7 +17,7 @@ const ContactButton = () => {
                 <div className="flex flex-col items-center space-y-2 mb-2 bg-white rounded-lg p-4 shadow-lg">
                     <a href="tel:+0399965025" className="flex items-center space-x-2 p-2 bg-white text-black rounded-full shadow-md w-full">
                         <img src={hotline} alt="Hotline" className="w-7 h-7" />
-                        <span className='font-medium hover:font-bold'>0399965025</span>
+                        <span className='font-medium hover:font-bold'>0377485926</span>
                     </a>
                     <a href="https://zalo.me/0399965025" className="flex items-center space-x-4 pt-2 bg-white text-black  rounded-full shadow-md w-full">
                         <img src={zalo} alt="Zalo" className="w-10 h-10" />

@@ -88,6 +88,10 @@ const Dashboard = (props: Props) => {
                     parseName = 'Hủy bỏ'
                     classColor = '#c05258'
                     break
+                case 'fail':
+                    parseName = 'Giao hàng thất bại'
+                    classColor = '#CC99FF'
+                    break
                 default:
                     parseName = statusName
                     classColor = '#000'

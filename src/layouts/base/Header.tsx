@@ -328,7 +328,7 @@ export default function Header() {
 
                         {user && (
                             <Badge
-                                className='text-2xl cursor-pointer mr-4'
+                                className='text-2xl cursor-pointer mx-2'
                                 count={data?.data?.length}
                                 size='small'
                                 offset={[0, 4]}

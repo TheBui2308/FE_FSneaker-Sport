@@ -4,10 +4,11 @@ import instance from "@/core/api";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Rate } from "antd";
+import { Modal } from 'antd'
 
 const OrderDetail = () => {
     const { id: orderID } = useParams();
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [detailOrder, setDetailOrder] = useState(null);
     const getUserID = () => {
@@ -16,12 +17,29 @@ const OrderDetail = () => {
         const userID = user?._id || "";
         return userID;
     };
-
+    const [cancelObj, setCancelObj] = useState(null);
     const [reviewObj, setReviewObj] = useState({
         userId: getUserID(),
         orderId: "", //id của oder
         reviews: [],
     });
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+    const handleOk = async () => {
+        let { orderID, paymentMethod } = cancelObj;
+        setIsModalOpen(false);
+        try {
+            await instance.patch(`api/order/update-order/${orderID}`, {
+                orderStatus: 'cancel'
+            })
+            toast.success('Hủy đơn hàng thành công')
+            fetchData()
+        } catch (error) {
+            toast.error(`Không thể hủy đơn hàng do trạng thái của đơn hàng này đã được thay đổi`)
+        }
+        fetchData()
+    }
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleString();
     };
@@ -45,20 +63,8 @@ const OrderDetail = () => {
 
     const cancelOrder = async () => {
         event?.stopPropagation();
-        try {
-            await instance.patch(`api/order/update-order/${orderID}`, {
-                orderStatus: "cancel",
-            });
-            // let txtMessage =
-            //     detailOrder?.paymentMethod == "cod"
-            //         ? "Hủy đơn hàng thành công"
-            //         : "Hủy đơn hàng thành công. Số tiền đã thanh toán sẽ được hoàn lại vào ví VNPay của bạn";
-            toast.success("Hủy đơn hàng thành công");
-            fetchData();
-        } catch (error) {
-            console.log(error);
-            toast.error("Không thể hủy do trạng thái của đơn hàng đã được thay đổi");
-        }
+        setIsModalOpen(true)
+
     };
     let ratingStarObj = [];
 
@@ -254,16 +260,18 @@ const OrderDetail = () => {
                                             Trạng thái:{" "}
                                             {(() => {
                                                 switch (detailOrder?.orderStatus) {
-                                                    case "pending":
-                                                        return "Đang xử lý"
-                                                    case "waiting":
-                                                        return "Đang chờ lấy hàng"
-                                                    case "cancel":
-                                                        return "Đã hủy đơn"
-                                                    case "delivering":
-                                                        return "Đã giao hàng"
-                                                    case "done":
-                                                        return "Đã hoàn thành"
+                                                    case 'pending':
+                                                        return 'Chờ xác nhận'
+                                                    case 'waiting':
+                                                        return 'Đã xác nhận'
+                                                    case 'cancel':
+                                                        return 'Hủy bỏ'
+                                                    case 'delivering':
+                                                        return 'Đang giao hàng'
+                                                    case 'done':
+                                                        return 'Giao hàng thành công'
+                                                    case 'fail':
+                                                        return 'Giao hàng thất bại'
                                                     default:
                                                         return detailOrder?.orderStatus
                                                 }
@@ -338,10 +346,16 @@ const OrderDetail = () => {
             </div>
             <div className="order-box__tool--btn flex gap-x-[12px] items-center justify-center flex-col gap-y-4 mb-4">
                 {(() => {
-                    if (["pending", "waiting"].includes(detailOrder?.orderStatus)) {
+                    if (["pending"].includes(detailOrder?.orderStatus)) {
                         return (
                             <button
-                                onClick={() => cancelOrder()}
+                                onClick={() => {
+                                    setCancelObj({
+                                        orderID: detailOrder._id,
+                                        paymentMethod: detailOrder.paymentMethod
+                                    })
+                                    cancelOrder()
+                                }}
                                 className="h-[36px] border border-red-500 text-red-500 bg-white outline-none hover:bg-red-500 hover:text-white transition-all rounded-md w-[320px] text-[16px]"
                             >
                                 Hủy đơn hàng
@@ -364,6 +378,10 @@ const OrderDetail = () => {
                     }
                 })()}
             </div>
+            {/* Model Confirm Hủy đơn hàng */}
+            <Modal title="Thông báo" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <p>Khi đồng ý hủy đơn hàng bạn sẽ không được hoàn tiền của đơn hàng đã đặt. Bạn có chắc chắn muốn hủy không?</p>
+            </Modal>
         </div>
     );
 };
