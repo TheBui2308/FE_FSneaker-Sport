@@ -15,6 +15,7 @@ import {
     List,
     Modal,
     Select,
+    Space,
     StepProps,
     Steps,
     Typography,
@@ -33,7 +34,7 @@ interface FieldType {
     orderStatus: string
     paymentStatus: string
     address: string
-    name: strings
+    name: string
 }
 
 const OrderDetail = () => {
@@ -41,10 +42,19 @@ const OrderDetail = () => {
     const [form] = Form.useForm()
     const [formOrderStatus] = Form.useForm()
 
+    const selectedValue = Form.useWatch('newStatus', formOrderStatus)
+    const [hasCancel, setHasCancel] = useState(false)
+
     const [data, setData] = useState<IOrder>()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const [history, setHistory] = useState<IOderHistory[]>([])
+
+    const [note, setNote] = useState('')
+
+    const onNoteChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNote(event.target.value)
+    }
 
     const fetchOrder = async () => {
         const res = await getOrder(orderId)
@@ -64,7 +74,13 @@ const OrderDetail = () => {
                 paymentStatus: data?.paymentStatus && ORDER_PAYMENT_STATUS_NAMES[data.paymentStatus]
             })
 
-            formOrderStatus.setFieldValue('newStatus', data?.orderStatus && ORDER_STATUS_NAMES[data.orderStatus])
+            formOrderStatus.setFieldValue('newStatus', data?.orderStatus && data.orderStatus)
+
+            const findNote = data?.statusHistory?.find((e) => e.note && e.status === 'cancel')
+            if (findNote) {
+                setNote(findNote.note)
+                setHasCancel(true)
+            }
         }
     }
 
@@ -92,7 +108,7 @@ const OrderDetail = () => {
         },
         {
             label: 'Số điện thoại',
-            children: "0" + data?.phone
+            children: '0' + data?.phone
         },
         {
             label: 'Địa chỉ',
@@ -109,7 +125,8 @@ const OrderDetail = () => {
 
         try {
             const response = await updateOrder(data._id, {
-                orderStatus: newStatus
+                orderStatus: newStatus,
+                note: note
             })
             const newOrderData: IOrder = response?.data
 
@@ -201,6 +218,7 @@ const OrderDetail = () => {
                 waiting: 'wait',
                 delivering: 'process',
                 done: 'finish',
+                fail: 'error',
                 cancel: 'error'
             }
             return statuses?.[history?.[0]?.status] ?? undefined
@@ -209,9 +227,9 @@ const OrderDetail = () => {
     }, [history])
 
     const steps = useMemo(() => {
-        const reversedHistory = [...history].reverse();  
+        const reversedHistory = [...history].reverse()
         const stepsData = reversedHistory.map((item, index) => {
-            const previousStatus = index > 0 ? reversedHistory[index - 1].status : 'Chờ xác nhận';
+            const previousStatus = index > 0 ? reversedHistory[index - 1].status : 'Chờ xác nhận'
             return {
                 title: `${
                     previousStatus !== 'Chờ xác nhận' ? ORDER_STATUS_NAMES[previousStatus] : previousStatus
@@ -223,10 +241,10 @@ const OrderDetail = () => {
                     </div>
                 )
             }
-        });
-        return stepsData.reverse();  // Đảo ngược lại danh sách các bước để hiển thị từ cuối lên đầu
-    }, [history]);
-    
+        })
+        return stepsData.reverse() // Đảo ngược lại danh sách các bước để hiển thị từ cuối lên đầu
+    }, [history])
+
     return (
         <Detail name='Đặt hàng'>
             <Descriptions
@@ -255,6 +273,14 @@ const OrderDetail = () => {
                                 placeholder='Vui lòng chọn'
                             />
                         </Form.Item>
+                        {!hasCancel && selectedValue === 'cancel' && (
+                            <Input.TextArea
+                                placeholder='lý do...'
+                                value={note}
+                                onChange={onNoteChange}
+                                onKeyDown={(e) => e.stopPropagation()}
+                            />
+                        )}
                     </Form>
                 </Modal>
             )}

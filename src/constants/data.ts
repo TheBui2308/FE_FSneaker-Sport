@@ -16,8 +16,8 @@ export const ORDER_STATUS_NAMES: Record<IOrderStatus, string> = {
     waiting: 'Đã xác nhận',
     delivering: 'Đang giao hàng',
     done: 'Giao hàng thành công',
-    cancel: 'Huỷ bỏ',
-    fail: 'Giao hàng thất bại'
+    fail: 'Giao hàng thất bại',
+    cancel: 'Huỷ bỏ'
 }
 
 export const ORDER_STATUS_COLORS: Record<IOrderStatus, string> = {

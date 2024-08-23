@@ -236,7 +236,7 @@ const Dashboard = () => {
             if (!acc[key]) {
                 acc[key] = { total: 0 }
             }
-            const totalProfit = (obj.price - obj.importPrice) * obj.totalQuantity
+            const totalProfit = (obj.promotionalPrice - obj.importPrice) * obj.totalQuantity
             acc[key].total += isNaN(totalProfit) ? 0 : totalProfit
             return acc
         }, {})

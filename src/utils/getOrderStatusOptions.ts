@@ -11,19 +11,19 @@ const ORDER_STATUS_FILTERS: StatusFilterItem[] = [
     { text: ORDER_STATUS_NAMES.waiting, value: 'waiting' },
     { text: ORDER_STATUS_NAMES.delivering, value: 'delivering' },
     { text: ORDER_STATUS_NAMES.done, value: 'done' },
-    { text: ORDER_STATUS_NAMES.cancel, value: 'cancel' },
-    { text: ORDER_STATUS_NAMES.fail, value: 'fail' }
+    { text: ORDER_STATUS_NAMES.fail, value: 'fail' },
+    { text: ORDER_STATUS_NAMES.cancel, value: 'cancel' }
 ]
 
 export const getOrderStatusOptions = (currentOrder: IOrder) => {
     return ORDER_STATUS_FILTERS.map((e) => {
         const validTransitions: Record<IOrderStatus, IOrderStatus[]> = {
-            pending: ['waiting', 'cancel'],
-            waiting: ['delivering', 'cancel'],
-            delivering: ['done', 'cancel', 'fail'],
+            pending: ['waiting','cancel'],
+            waiting: ['delivering'],
+            delivering: ['done', 'fail'],
             done: [],
-            cancel: [],
-            fail: []
+            fail: [],
+            cancel: []
         }
 
         const disabled = !(currentOrder && validTransitions[currentOrder.orderStatus].includes(e.value))

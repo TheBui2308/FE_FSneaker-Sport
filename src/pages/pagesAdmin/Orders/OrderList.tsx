@@ -14,7 +14,6 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-
 const ORDER_PAYMENT_COLORS: Record<IPaymentMethod, string> = {
     cod: 'default',
     vnpay: 'success'
@@ -34,6 +33,7 @@ const ORDER_STATUS_FILTERS: StatusFilterItem[] = [
     { text: ORDER_STATUS_NAMES.waiting, value: 'waiting' },
     { text: ORDER_STATUS_NAMES.delivering, value: 'delivering' },
     { text: ORDER_STATUS_NAMES.done, value: 'done' },
+    { text: ORDER_STATUS_NAMES.fail, value: 'fail' },
     { text: ORDER_STATUS_NAMES.cancel, value: 'cancel' }
 ]
 
@@ -43,7 +43,7 @@ const OrderList: React.FC = () => {
     const [form] = Form.useForm()
 
     const queryParams = new URLSearchParams(location.search)
-    let statusCode = queryParams.get('status');
+    let statusCode = queryParams.get('status')
 
     // states
     const [data, setData] = useState<IOrder[]>([])

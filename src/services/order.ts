@@ -19,6 +19,7 @@ export const getOrder = async (orderId: string) => {
 
 export interface UpdateOrderBody {
     orderStatus?: IOrderStatus
+    note?: string
     // paymentStatus?: IPaymentStatus
 }
 
