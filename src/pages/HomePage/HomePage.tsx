@@ -38,15 +38,33 @@ const HomePage = (props: Props) => {
         // instance.get("api/order/product-best-seller?startDate=2024-06-01&endDate=2024-12-30").then(({ data }) => {
         //     setOutStProducts(data.data);
         // })
+        // instance
+        //     .get('api/order/product-best-seller?startDate=2024-06-01&endDate=2024-12-30')
+        //     .then(({ data }) => {
+        //         const top12Products = data.data.slice(0, 12)
+        //         setOutStProducts(top12Products)
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error fetching top-selling products:', error)
+        //     })
         instance
             .get('api/order/product-best-seller?startDate=2024-06-01&endDate=2024-12-30')
             .then(({ data }) => {
-                const top12Products = data.data.slice(0, 12)
-                setOutStProducts(top12Products)
+                // Lọc ra các sản phẩm khác nhau dựa trên productId
+                const uniqueProducts = data.data.reduce((acc: any[], product: any) => {
+                    if (!acc.find((p) => p.productId === product.productId)) {
+                        acc.push(product);
+                    }
+                    return acc;
+                }, []);
+
+                // Lấy ra 12 sản phẩm đầu tiên
+                const top12Products = uniqueProducts.slice(0, 12);
+                setOutStProducts(top12Products);
             })
             .catch((error) => {
-                console.error('Error fetching top-selling products:', error)
-            })
+                console.error('Error fetching top-selling products:', error);
+            });
     }, [])
 
     const handgetProduct = async (id: string) => {
@@ -170,8 +188,8 @@ const HomePage = (props: Props) => {
                                                     className='w-10 h-10 flex items-center justify-center text-neutral-950 bg-white hover:bg-neutral-950 hover:text-white outline-none hover:opacity-90 transition-all rounded-md text-sm leading-none flex-1'
                                                     title='Xem nhanh'
                                                 >
-                                                    <ShoppingCartIcon className='size-3 mr-2 text-xs' />
-                                                    Thêm vào giỏ
+                                                    {/* <ShoppingCartIcon className='size-3 mr-2 text-xs' /> */}
+                                                    Xem chi tiết
                                                 </button>
                                                 <button
                                                     className='w-10 h-10 flex items-center justify-center border border-neutral-800 text-white bg-neutral-800 outline-none hover:opacity-90 transition-all rounded-md text-sm leading-none'
@@ -205,7 +223,7 @@ const HomePage = (props: Props) => {
                 </div>
 
                 <NewsList />
-                
+
                 <div className='py-16 px-2 grid lg:grid-cols-4 md:grid-cols-2 gap-4'>
                     <div className='flex justify-center items-start gap-3'>
                         <img

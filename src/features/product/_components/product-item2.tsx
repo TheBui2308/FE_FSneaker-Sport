@@ -33,11 +33,10 @@ export default function ProductItem({ product }: Props) {
                 <div className='relative rounded-md overflow-hidden'>
                     {takeTwoImage.map((itemImage, index) => (
                         <img
-                            className={`w-full h-[240px] ${
-                                index == 1
+                            className={`w-full h-[240px] ${index == 1
                                     ? 'absolute top-0 left-0 right-0 bottom-0 object-cover opacity-0 group-hover:opacity-100 duration-500  transition-all'
                                     : ''
-                            }`}
+                                }`}
                             src={itemImage.imageUrl}
                             alt='Ảnh không tồn tại'
                         />
@@ -65,8 +64,8 @@ export default function ProductItem({ product }: Props) {
                         className='w-10 h-10 flex items-center justify-center text-neutral-950 bg-white hover:bg-neutral-950 hover:text-white outline-none hover:opacity-90 transition-all rounded-md text-sm leading-none flex-1'
                         title='Xem nhanh'
                     >
-                        <ShoppingCartIcon className='size-3 mr-2 text-xs' />
-                        Thêm vào giỏ
+                        {/* <ShoppingCartIcon className='size-3 mr-2 text-xs' /> */}
+                        Xem chi tiết
                     </button>
                     <button
                         className='w-10 h-10 flex items-center justify-center border border-neutral-800 text-white bg-neutral-800 outline-none hover:opacity-90 transition-all rounded-md text-sm leading-none'
