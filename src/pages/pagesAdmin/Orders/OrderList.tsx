@@ -9,7 +9,7 @@ import { formatPrice } from '@/lib/utils'
 import { getOrders, updateOrder } from '@/services/order'
 import { getOrderStatusOptions } from '@/utils/getOrderStatusOptions'
 import { EditOutlined, InfoCircleOutlined } from '@ant-design/icons'
-import { Badge, Button, Form, Modal, Select, Space, Table, TableProps, Tag, message } from 'antd'
+import { Badge, Button, Form, Input, Modal, Select, Space, Table, TableProps, Tag, message } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -51,6 +51,15 @@ const OrderList: React.FC = () => {
     const [status, setStatus] = useState<IOrderStatus[]>(statusCode || [])
 
     const [orderEdit, setOrderEdit] = useState<IOrder>()
+
+    const [note, setNote] = useState('')
+    const [isCancelValue, setIsCancelValue] = useState(false)
+
+    const onNoteChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNote(event.target.value)
+    }
+
+    const selectedValue = Form.useWatch('status', form)
 
     const fetchOrders = async () => {
         const params = {
@@ -151,6 +160,13 @@ const OrderList: React.FC = () => {
     const onPressEditAction = (item: IOrder) => {
         setOrderEdit(item)
         form.setFieldValue('status', item.orderStatus)
+
+        if (item?.orderStatus === 'cancel') {
+            setIsCancelValue(true)
+        } else {
+            setIsCancelValue(false)
+        }
+
         showModal()
     }
 
@@ -162,7 +178,8 @@ const OrderList: React.FC = () => {
         const newStatus = form.getFieldValue('status')
         try {
             const response = await updateOrder(orderEdit._id, {
-                orderStatus: newStatus
+                orderStatus: newStatus,
+                note: note
             })
 
             const newOrderData: IOrder = response?.data
@@ -217,6 +234,14 @@ const OrderList: React.FC = () => {
                             placeholder='Vui lòng chọn'
                         />
                     </Form.Item>
+                    {!isCancelValue && selectedValue === 'cancel' && (
+                        <Input.TextArea
+                            placeholder='lý do...'
+                            value={note}
+                            onChange={onNoteChange}
+                            onKeyDown={(e) => e.stopPropagation()}
+                        />
+                    )}
                 </Form>
             </Modal>
         </div>

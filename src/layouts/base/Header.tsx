@@ -143,7 +143,7 @@ export default function Header() {
     return (
         <>
             <header>
-                <div className='bg-black py-2 text-white text-xs'>
+                {/* <div className='bg-black py-2 text-white text-xs'>
                     <div className='app-container flex items-center justify-between'>
                         <div className='flex gap-3'>
                             <span>Hotline: (+84) 977.826.896</span>
@@ -158,8 +158,8 @@ export default function Header() {
                             </div>
                             <span>Thông báo của tôi</span>
                         </div>
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
 
                 <div className='flex app-container border-b border-neutral-200 py-3 gap-5'>
                     <div className='block md:hidden'>

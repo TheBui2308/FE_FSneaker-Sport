@@ -75,31 +75,33 @@ const OrderDetail = () => {
             })
 
             formOrderStatus.setFieldValue('newStatus', data?.orderStatus && data.orderStatus)
+            const historyData = data?.statusHistory
 
-            const findNote = data?.statusHistory?.find((e) => e.note && e.status === 'cancel')
+            const findNote = historyData?.find((e) => e.note && e.status === 'cancel')
             if (findNote) {
                 setNote(findNote.note)
                 setHasCancel(true)
             }
+
+            setHistory(historyData?.reverse())
         }
     }
 
     const fetchOrderHistory = async () => {
-        const res = await getOrderHistory(orderId)
-
-        if (res?.statusHistory) {
-            const data: IOderHistory[] = res?.statusHistory
-            setHistory(data?.reverse())
-        }
+        // const res = await getOrderHistory(orderId)
+        // if (res?.statusHistory) {
+        //     const data: IOderHistory[] = res?.statusHistory
+        //     setHistory(data?.reverse())
+        // }
     }
 
     useEffect(() => {
         fetchOrder()
     }, [])
 
-    useEffect(() => {
-        fetchOrderHistory()
-    }, [])
+    // useEffect(() => {
+    //     fetchOrderHistory()
+    // }, [])
 
     const items: DescriptionsProps['items'] = [
         {
@@ -138,7 +140,7 @@ const OrderDetail = () => {
                 const newData = { ...data, orderStatus: newOrderData.orderStatus } as IOrder
                 setData(newData)
                 setIsModalOpen(false)
-                fetchOrderHistory()
+                fetchOrder()
             }
         } catch (error: any) {
             message.error(error?.message)
@@ -149,6 +151,7 @@ const OrderDetail = () => {
     const handleCancel = () => {
         setIsModalOpen(false)
         formOrderStatus.setFieldValue('newStatus', ORDER_STATUS_NAMES[data?.orderStatus as IOrderStatus])
+        setNote('')
     }
 
     const renderForm = () => {
@@ -238,6 +241,7 @@ const OrderDetail = () => {
                     <div>
                         <div>Thời gian: {dayjs(item?.timestamp).format('HH:mm DD-MM-YYYY')}</div>
                         <div>Được thay đổi bởi: {item.adminName}</div>
+                        {item?.note && <div>Ghi chú: {item?.note}</div>}
                     </div>
                 )
             }
