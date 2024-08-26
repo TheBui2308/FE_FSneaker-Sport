@@ -77,7 +77,7 @@ export default function ProductItem({ product }: Props) {
             </div>
             <div>
                 <span className='text-xs block'>+{(product && product.productDetails.length) || 0} kích thước</span>
-                <Rate className='my-1' disabled value={Number.parseInt(product?.averageRating)} />
+                <Rate allowHalf className='my-1' disabled value={Number.parseFloat(product?.averageRating)} />
                 <p className='text-md my-1'>{product && product.nameProduct}</p>
                 <div className='flex items-center gap-1'>
                     <span className='text-red-500 text-sm'>

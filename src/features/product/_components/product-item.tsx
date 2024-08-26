@@ -66,7 +66,7 @@ export default function ProductItem({
             </div>
             <div>
                 <span className='text-xs mr-3 block'>+{sizeId?.length || 0} kích thước</span>
-                <Rate className='my-1' disabled value={Number.parseInt(ratingStar)} />
+                <Rate allowHalf className='my-1' disabled value={Number.parseFloat(ratingStar)} />
                 <p className='text-md my-1'>{name}</p>
                 <div className='flex items-center gap-1'>
                     <span className='text-red-500 text-sm'>{promotionalPrice?.toLocaleString()}₫</span>

@@ -22,7 +22,7 @@ const ProductComment = ({ productID }) => {
         if (selectedRate == null) {
             return comments;
         }
-        return comments.filter(x => Number.parseInt(x.rating) == selectedRate);
+        return comments.filter(x => Number.parseFloat(x.rating) == selectedRate);
     }, [selectedRate, comments])
 
     const handleChange = (value: number | null) => {
@@ -61,7 +61,7 @@ const ProductComment = ({ productID }) => {
 
                                         <div className='flex-1 ml-3'>
                                             <h3 className='text-base font-semibold'>{cmt.idAccount.userName}</h3>
-                                            <Rate className='my-1' disabled value={Number.parseInt(cmt.rating)} />
+                                            <Rate allowHalf className='my-1' disabled value={Number.parseFloat(cmt.rating)} />
                                             <div className='text-sm'>{cmt.content}</div>
                                         </div>
                                     </div>
