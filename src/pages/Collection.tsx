@@ -14,6 +14,7 @@ import { IFSize } from '@/types/size.type'
 import { EyeIcon, FilterIcon, ShoppingCartIcon } from 'lucide-react'
 import { SetStateAction, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Rate } from 'antd'
 
 interface IFSlider {
     sliderVal: number
@@ -104,6 +105,7 @@ const Collection = () => {
                     </div>
                 </div>
                 <div>
+                    <Rate allowHalf className='my-1' disabled value={Number.parseFloat(vals?.averageRating)} />
                     <span className='text-xs'>+{vals.productDetails?.length || 0} kích thước</span>
                     <p className='text-md my-1 line-clamp-2'>{vals.nameProduct}</p>
                     <div className='flex items-center gap-2'>

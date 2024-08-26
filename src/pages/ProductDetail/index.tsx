@@ -164,7 +164,7 @@ const ProductDetail = () => {
                                 <span className='mx-2 text-neutral-200'>|</span>
                                 <span>Thương hiệu: {infoProduct?.data?.nameCategory}</span>
                             </div>
-                            <Rate className='mb-2' disabled value={Number.parseInt(infoProduct?.data?.averageRating)} />
+                            <Rate allowHalf className='mb-2' disabled value={Number.parseFloat(infoProduct?.data?.averageRating)} />
                             <div className='p-4 bg-neutral-50 rounded-md flex items-center'>
                                 <span className='w-[120px]'>Giá:</span>
                                 <span className='text-red-500 font-medium text-xl mr-2'>
@@ -510,7 +510,7 @@ const ProductDetail = () => {
                                             name={item.name}
                                             price={item.productDetails[0].price}
                                             promotionalPrice={item.productDetails[0].promotionalPrice}
-                                            ratingStar={Number.parseInt(item.averageRating)}
+                                            ratingStar={Number.parseFloat(item.averageRating)}
                                         />
                                     </CarouselItem>
                                 )

@@ -200,10 +200,10 @@ const HomePage = (props: Props) => {
                                             </div>
                                         </div>
                                         <div>
-                                            <Rate
+                                            <Rate allowHalf
                                                 className='my-1'
                                                 disabled
-                                                value={Number.parseInt(itemOutStProducts?.averageRating)}
+                                                value={Number.parseFloat(itemOutStProducts?.averageRating)}
                                             />
                                             <p className='text-md my-1'>{itemOutStProducts.productName}</p>
                                             <div className='flex items-center gap-1'>
