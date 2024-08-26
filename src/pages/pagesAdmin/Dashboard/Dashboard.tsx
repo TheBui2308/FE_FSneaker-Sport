@@ -64,17 +64,34 @@ const Dashboard = () => {
         { label: 'Năm', value: 'year' }
     ]
 
+    // const { startDate, endDate } = useMemo(() => {
+    //     if (unitType === 'date') {
+    //         return {
+    //             startDate: dayjs(date).startOf('day').toISOString(),
+    //             endDate: dayjs(date).endOf('day').toISOString()
+    //         }
+    //     } else
+    //         return {
+    //             startDate: dayjs(date.startOf(unitType)).format(DEFAULT_DATE_FORMAT),
+    //             endDate: dayjs(date.endOf(unitType)).toISOString()
+    //         }
+    // }, [date, unitType])
     const { startDate, endDate } = useMemo(() => {
+        const format = 'YYYY-MM-DD'; // Định dạng ngày không có phần thời gian
+
         if (unitType === 'date') {
+            // Ngày bắt đầu và kết thúc đều là ngày bạn chọn
             return {
-                startDate: dayjs(date).startOf('day').toISOString(),
-                endDate: dayjs(date).endOf('day').toISOString()
+                startDate: dayjs(date).format(format),
+                endDate: dayjs(date).format(format) // Kết thúc là cùng ngày
             }
-        } else
+        } else {
+            // Đối với các đơn vị thời gian khác (tuần, tháng, năm)
             return {
-                startDate: dayjs(date.startOf(unitType)).format(DEFAULT_DATE_FORMAT),
-                endDate: dayjs(date.endOf(unitType)).toISOString()
+                startDate: dayjs(date).startOf(unitType).format(format),
+                endDate: dayjs(date).endOf(unitType).format(format) // Kết thúc là ngày cuối cùng của đơn vị thời gian
             }
+        }
     }, [date, unitType])
 
     const countOrderStatus = (orderList: any) => {
@@ -127,7 +144,7 @@ const Dashboard = () => {
                 case 'fail':
                     parseName = 'Giao hàng thất bại'
                     classColor = '#CC99FF'
-                    break        
+                    break
                 default:
                     parseName = statusName
                     classColor = '#000'
