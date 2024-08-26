@@ -9,7 +9,7 @@ const ReturnPolicy = () => {
         <div className="pb-10">
             <BreadCrumb links={breadcrumbLinks} />
             <div className='app-container text-[#333]  pt-5'>
-                <h1 className="text-3xl font-bold mb-6">CHÍNH SÁCH ĐỔI TRẢ VÀ BẢO HÀNH</h1>
+                <h1 className="text-3xl font-bold mb-6">CHÍNH SÁCH ĐỔI TRẢ, BẢO HÀNH VÀ HOÀN TIỀN</h1>
 
                 <section className="mb-8">
                     <h2 className="text-2xl font-semibold mb-4">1. Chính sách đổi trả</h2>
@@ -56,6 +56,36 @@ const ReturnPolicy = () => {
                     <p className="mt-4">
                         FSneaker nhận hỗ trợ bảo hành miễn phí 2 hạng mục: keo, chỉ trên sản phẩm. Các hạng mục khác (tùy theo mức độ hư hỏng), hoặc hư hỏng do bị tác động, phát sinh trong quá trình sử dụng chúng tôi sẽ kiểm tra và thông báo trực tiếp với khách hàng, nếu ngoài khả năng shop xin phép từ chối hỗ trợ bảo hành.
                     </p>
+                </section>
+
+                <section className='mt-6'>
+                    <h2 className="text-2xl font-semibold mb-4">3. Chính sách hoàn tiền</h2>
+                    <p className="mb-4 font-semibold">
+                        3.1. Hoàn tiền
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2">
+                        {/* <li>
+                            Sản phẩm mua 1 tặng 1 hoặc giảm từ 40% sẽ được hỗ trợ bảo hành keo chỉ miễn phí trong 1 tháng.
+                        </li> */}
+                        <li>
+                        Nếu đơn hàng vẫn chưa được xử lý (ví dụ: chưa được đóng gói hoặc chưa giao cho đơn vị vận chuyển), quý khách hàng vui lòng chủ động liên hệ với để chúng tôi hoàn tiền toàn bộ cho khách hàng sau khi hủy đơn hàng. Thời gian hoàn tiền sẽ được chuyển đến quý khách trong vòng 24h.
+                        </li>
+                    </ul>
+                    
+                    <p className="mt-4 font-semibold">
+                        3.2. Không Hoàn Tiền
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2">
+                        {/* <li>
+                            Sản phẩm mua 1 tặng 1 hoặc giảm từ 40% sẽ được hỗ trợ bảo hành keo chỉ miễn phí trong 1 tháng.
+                        </li> */}
+                        <li className='mt-3'>
+                        Chúng tôi rất tiếc phải thông báo rằng chúng tôi không cung cấp chính sách hoàn tiền cho các đơn hàng đã được thanh toán thành công nhưng khách hàng không nhận hàng. Điều này bao gồm các trường hợp đơn hàng bị đánh dấu là "Giao hàng thất bại" do khách hàng không có mặt để nhận hàng hoặc không liên hệ lại với chúng tôi sau khi hàng không được giao.
+                        </li>
+                    </ul>
+
+                    <p className='mt-4'> <span className='font-bold'>Vui lòng đảm bảo thông tin giao hàng chính xác</span> và có mặt tại địa chỉ giao hàng để nhận hàng. Chúng tôi khuyến khích Quý khách liên hệ với chúng tôi ngay lập tức nếu có bất kỳ vấn đề nào liên quan đến việc giao hàng.</p>
+                    <p className='mt-4'>Nếu Quý khách có bất kỳ câu hỏi nào về chính sách này hoặc cần hỗ trợ thêm, vui lòng liên hệ với chúng tôi qua email <span className='font-bold'>fsneakershop@gmail.com</span> hoặc số điện thoại <span className='font-bold'>0377485926.</span></p>
                 </section>
             </div>
         </div>
